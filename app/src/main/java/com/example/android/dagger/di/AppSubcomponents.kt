@@ -1,4 +1,7 @@
 package com.example.android.dagger.di
 
-class AppSubcomponents {
-}
+import dagger.Module
+
+// This module tells AppComponent which are its subcomponents
+@Module(subcomponents = [RegistrationComponent::class, LoginComponent::class, UserComponent::class])
+class AppSubcomponents

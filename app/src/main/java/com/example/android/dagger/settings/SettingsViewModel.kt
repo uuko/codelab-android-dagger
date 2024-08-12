@@ -18,16 +18,20 @@ package com.example.android.dagger.settings
 
 import com.example.android.dagger.user.UserDataRepository
 import com.example.android.dagger.user.UserManager
+import javax.inject.Inject
 
 /**
  * SettingsViewModel is the ViewModel that [SettingsActivity] uses to handle complex logic.
  */
-class SettingsViewModel(
+class SettingsViewModel @Inject constructor(
     private val userDataRepository: UserDataRepository,
     private val userManager: UserManager
 ) {
 
     fun refreshNotifications() {
+        //沒用是因為跟MainViewModel 不同instance
+        //我們可以通過註釋來確定範圍 UserDataRepository @Singleton 嗎 AppComponent ？遵循與以前相同的推理，我們不想這樣做，因為如果使用者註銷或註銷
+        // ，我們不希望 UserDataRepository 在記憶體中保留相同的實例。該數據特定於登錄使用者。
         userDataRepository.refreshUnreadNotifications()
     }
 
