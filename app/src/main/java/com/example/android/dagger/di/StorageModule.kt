@@ -6,6 +6,9 @@ import com.example.android.dagger.storage.Storage
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+
 //@Retention(AnnotationRetention.BINARY)
 //@Qualifier
 //annotation class RegistrationStorage
@@ -13,6 +16,8 @@ import dagger.Provides
 //@Retention(AnnotationRetention.BINARY)
 //@Qualifier
 //annotation class LoginStorage
+@InstallIn(SingletonComponent::class)
+
 @Module
 abstract class StorageModule {
     //provide傳的是instance實例 , binds是interface

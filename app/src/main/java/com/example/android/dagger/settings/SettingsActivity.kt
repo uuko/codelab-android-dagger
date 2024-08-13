@@ -20,22 +20,35 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.example.android.dagger.MyApplication
 import com.example.android.dagger.R
 import com.example.android.dagger.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
 
     @Inject
     lateinit var settingsViewModel: SettingsViewModel
+//
+//    @InstallIn(SingletonComponent::class)
+//    @EntryPoint
+//    interface UserManagerEntryPoint {
+//        fun userManager(): UserManager
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 //        (application as MyApplication).appComponent.inject(this)
         // Gets the userManager from the application graph to obtain the instance
         // of UserComponent and gets this Activity injected
-        val userManager = (application as MyApplication).appComponent.userManager()
-        userManager.userComponent!!.inject(this)
+//        val userManager = (application as MyApplication).appComponent.userManager()
+//        userManager.userComponent!!.inject(this)
+
+//        val entryPoint = EntryPointAccessors.fromApplication(
+//            applicationContext,
+//            UserManagerEntryPoint::class.java
+//        )
+//        val userManager = entryPoint.userManager()
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)

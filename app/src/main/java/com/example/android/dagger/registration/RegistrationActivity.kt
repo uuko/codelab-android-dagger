@@ -27,27 +27,34 @@ import com.example.android.dagger.main.MainActivity
 import com.example.android.dagger.registration.enterdetails.EnterDetailsFragment
 import com.example.android.dagger.registration.termsandconditions.TermsAndConditionsFragment
 import com.example.android.dagger.user.UserManager
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
-
+@AndroidEntryPoint
 class RegistrationActivity : AppCompatActivity() {
-
+//
     @Inject
     lateinit var userManager: UserManager
 
     @Inject
     lateinit var registrationViewModel: RegistrationViewModel
-    lateinit var registrationComponent: RegistrationComponent
+//    lateinit var registrationComponent: RegistrationComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
-        // Ask Dagger to inject our dependencies
-//        (application as MyApplication).appComponent.inject(this)
+//        // Ask Dagger to inject our dependencies
+////        (application as MyApplication).appComponent.inject(this)
+//        // Creates an instance of Registration component by grabbing the factory from the app graph
+//        registrationComponent = (application as MyApplication).appComponent.registrationComponent().create()
+//        // Injects this activity to the just created registration component
+//        registrationComponent.inject(this)
+//        Log.e("Dagger", "RegistrationActivity: $userManager", )
+
         // Creates an instance of Registration component by grabbing the factory from the app graph
-        registrationComponent = (application as MyApplication).appComponent.registrationComponent().create()
-        // Injects this activity to the just created registration component
-        registrationComponent.inject(this)
-        Log.e("Dagger", "RegistrationActivity: $userManager", )
 
 //        registrationViewModel = RegistrationViewModel((application as MyApplication).userManager)
         supportFragmentManager.beginTransaction()

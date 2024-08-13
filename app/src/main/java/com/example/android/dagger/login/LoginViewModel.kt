@@ -19,12 +19,14 @@ package com.example.android.dagger.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.android.dagger.user.UserManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 /**
  * LoginViewModel is the ViewModel that [LoginActivity] uses to
  * obtain information of what to show on the screen and handle complex logic.
  */
+//@HiltViewModel
 //沒有要被多個fragment用所以不用設定範圍
 class LoginViewModel @Inject constructor(private val userManager: UserManager) {
 

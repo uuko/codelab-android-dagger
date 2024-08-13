@@ -30,8 +30,9 @@ import com.example.android.dagger.MyApplication
 import com.example.android.dagger.R
 import com.example.android.dagger.registration.RegistrationActivity
 import com.example.android.dagger.registration.RegistrationViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
+@AndroidEntryPoint
 class EnterDetailsFragment : Fragment() {
 
     /**
@@ -56,19 +57,19 @@ class EnterDetailsFragment : Fragment() {
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        //Important - Best practices
-        //重要 - 最佳做法
-        //
-        //An Activity injects Dagger in the onCreate method before calling super.
-        //Activity 在調用 super 之前在方法中 onCreate 注入 Dagger。
-        //
-        //A Fragment injects Dagger in the onAttach method after calling super.
-        //A Fragment 在調用 super 后在方法中 onAttach 注入 Dagger。
-        (activity as RegistrationActivity).registrationComponent.inject(this)
-
-    }
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        //Important - Best practices
+//        //重要 - 最佳做法
+//        //
+//        //An Activity injects Dagger in the onCreate method before calling super.
+//        //Activity 在調用 super 之前在方法中 onCreate 注入 Dagger。
+//        //
+//        //A Fragment injects Dagger in the onAttach method after calling super.
+//        //A Fragment 在調用 super 后在方法中 onAttach 注入 Dagger。
+//        (activity as RegistrationActivity).registrationComponent.inject(this)
+//
+//    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

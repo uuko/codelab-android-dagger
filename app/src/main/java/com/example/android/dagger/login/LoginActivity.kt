@@ -28,18 +28,35 @@ import androidx.lifecycle.Observer
 import com.example.android.dagger.main.MainActivity
 import com.example.android.dagger.MyApplication
 import com.example.android.dagger.R
+import com.example.android.dagger.di.LoginComponent
 import com.example.android.dagger.registration.RegistrationActivity
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
 
 //    private lateinit var loginViewModel: LoginViewModel
     private lateinit var errorTextView: TextView
-    @Inject
+    //hiltviewmodel 直接用by就好
+//    @Inject
     lateinit var loginViewModel: LoginViewModel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        (application as MyApplication).appComponent.loginComponent().create().inject(this)
+    //
+    //https://dagger.dev/hilt/migration-guide
 
+    @InstallIn(SingletonComponent::class)
+    @EntryPoint
+    interface LoginEntryPoint {
+        fun loginComponent(): LoginComponent.Factory
+    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+//        (application as MyApplication).appComponent.loginComponent().create().inject(this)
+        val entryPoint = EntryPointAccessors.fromApplication(applicationContext, LoginEntryPoint::class.java)
+        entryPoint.loginComponent().create().inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 

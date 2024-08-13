@@ -31,11 +31,7 @@ private const val PASSWORD_SUFFIX = "password"
 @Singleton
 class UserManager @Inject constructor(
     private val storage: Storage,
-    // Since UserManager will be in charge of managing the UserComponent lifecycle,
-    // it needs to know how to create instances of it
-    //因為UserDataRepository依賴這個 UserComponent是為了讓兩個activity共用UserDataRepository
-    //讓他登入登出是管理這個
-    private val userComponentFactory: UserComponent.Factory
+    private val userDataRepository: UserDataRepository
 ) {
 
     /**
@@ -48,20 +44,18 @@ class UserManager @Inject constructor(
     val username: String
         get() = storage.getString(REGISTERED_USER)
 
-    //    fun isUserLoggedIn() = userDataRepository != null
-    //我們希望 UserDataRepository 將範圍限定為 UserComponent
-    // ，以便兩者 MainActivity 和 SettingsActivity 可以共用它的同一實例。
-    var userComponent: UserComponent? = null
-        private set
 
-    fun isUserLoggedIn() = userComponent != null
+
+    fun isUserLoggedIn() = userDataRepository.username != null
 
     fun logout() {
-        userComponent = null
+        userDataRepository.cleanUp()
     }
 
-    private fun userJustLoggedIn() {
-        userComponent = userComponentFactory.create()
+
+    private fun userJustLoggedIn(username: String) {
+        // When the user logs in, we create populate data in UserComponent
+        userDataRepository.initData(username)
     }
 
     fun isUserRegistered() = storage.getString(REGISTERED_USER).isNotEmpty()
@@ -69,7 +63,7 @@ class UserManager @Inject constructor(
     fun registerUser(username: String, password: String) {
         storage.setString(REGISTERED_USER, username)
         storage.setString("$username$PASSWORD_SUFFIX", password)
-        userJustLoggedIn()
+        userJustLoggedIn(username)
     }
 
     fun loginUser(username: String, password: String): Boolean {
@@ -79,7 +73,7 @@ class UserManager @Inject constructor(
         val registeredPassword = storage.getString("$username$PASSWORD_SUFFIX")
         if (registeredPassword != password) return false
 
-        userJustLoggedIn()
+        userJustLoggedIn(username)
         return true
     }
 
